@@ -1,6 +1,7 @@
 // Copyright 2026 NNTU-CS
 #include <iostream>
 #include <vector>
+#include <random>
 #include "train.h"
 
 int experiment_fixed(int n, bool state) {
@@ -12,17 +13,19 @@ int experiment_fixed(int n, bool state) {
 }
 double experiment_random_avg(int n, int trials = 10) {
   double sum = 0.0;
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  std::uniform_int_distribution<int> dist(0, 1);
   for (int t = 0; t < trials; ++t) {
     Train train;
     for (int i = 0; i < n; ++i)
-      train.addCar(rand() % 2 == 0);
+      train.addCar(dist(gen) == 1);
     train.getLength();
     sum += train.getOpCount();
   }
   return sum / trials;
 }
 int main() {
-  srand(static_cast<unsigned>(time(nullptr)));
   const int MIN_N = 2;
   const int MAX_N = 30;
   const int STEP = 1;
