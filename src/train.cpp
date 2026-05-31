@@ -12,8 +12,7 @@ void Train::addCar(bool light) {
   if (!first) {
     first = car;
     car->next = car->prev = car;
-  }
-  else {
+  } else {
     car->next = first;
     car->prev = first->prev;
     first->prev->next = car;
@@ -24,7 +23,6 @@ void Train::addCar(bool light) {
 int Train::getLength() {
   if (!first) return 0;
   countOp = 0;
-  bool startState = first->light;
   first->light = true;
   Car* scout = first;
   while (true) {
